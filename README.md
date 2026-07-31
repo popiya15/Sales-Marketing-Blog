@@ -1,18 +1,9 @@
-# TEX Marketing Hub V5
+# TEX Marketing Hub V6
 
-GitHub Pages-ready static website.
+GitHub Pages-ready version with a responsive magazine-spread hero.
 
-## Upload
-Upload everything inside this folder to the repository root:
-- `index.html`
-- `css/`
-- `js/`
-- `images/`
+- Desktop/tablet: Marketing message and Volume 01 appear as an open editorial spread.
+- Mobile: the Marketing message sits behind the newsletter and remains partially visible.
+- Existing fullscreen viewer, zoom, drag, pinch, download and archive behavior are preserved.
 
-## V5 changes
-- Desktop single-screen layout with no page scrolling on standard desktop displays
-- Removed About section and topic boxes
-- Kept Volume 02 and Volume 03 as Coming Soon, without months
-- Three-column grid prevents the newsletter cover from overlapping text
-- Existing fullscreen viewer, zoom, drag, pinch and download functions preserved
-- Mobile remains vertically scrollable
+Upload every file and folder in this directory to the root of the GitHub repository.

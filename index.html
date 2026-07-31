@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Ethiopic:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=5.0">
+  <link rel="stylesheet" href="css/style.css?v=6.0">
 </head>
 <body>
   <main class="site" id="home">
@@ -38,10 +38,17 @@
         </div>
 
         <div class="cover-area">
-          <button class="cover js-open" type="button" aria-label="Open Marketing News Volume 01">
-            <span class="cover-halo" aria-hidden="true"></span>
-            <span class="cover-edge" aria-hidden="true"></span>
-            <img src="images/newsletter-vol01-thumb.webp" width="520" height="780" alt="TEX Marketing News Volume 01 cover">
+          <button class="magazine-spread js-open" type="button" aria-label="Open Marketing News Volume 01">
+            <span class="spread-halo" aria-hidden="true"></span>
+            <span class="spread-shadow" aria-hidden="true"></span>
+            <span class="spread-page message-page">
+              <img src="images/marketing-message-thumb.webp" width="700" height="1050" alt="สารจาก Marketing">
+            </span>
+            <span class="spread-page newsletter-page">
+              <span class="cover-edge" aria-hidden="true"></span>
+              <img src="images/newsletter-vol01-thumb.webp" width="520" height="780" alt="TEX Marketing News Volume 01 cover">
+            </span>
+            <span class="spread-fold" aria-hidden="true"></span>
           </button>
           <button class="cover-caption js-open" type="button">Open full screen <span aria-hidden="true">↗</span></button>
         </div>
@@ -88,6 +95,6 @@
     <div class="canvas" id="canvas"><div class="loading" id="loading"><span></span>Loading original image</div><img class="newsletter" id="newsletter" data-src="images/newsletter-vol01.png" alt="TEX Marketing News Volume 01" draggable="false"></div>
     <div class="viewer-tip">Scroll or pinch to zoom · Drag to move · ESC to close</div>
   </div>
-  <script src="js/app.js?v=5.0"></script>
+  <script src="js/app.js?v=6.0"></script>
 </body>
 </html>
