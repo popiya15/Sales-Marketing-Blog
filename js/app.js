@@ -111,11 +111,20 @@ async function openViewer(trigger) {
 
   try {
     await loadOriginalImage(source);
-    requestAnimationFrame(() => {
+
+requestAnimationFrame(() => {
     fitToScreen();
 
     if (source.includes("newsletter")) {
-        zoomAt(0.40, canvas.clientWidth / 2, canvas.clientHeight / 2);
+
+        // เริ่มที่ 40%
+        scale = Math.max(minimumScale, 0.40);
+
+        // จัดให้อยู่กึ่งกลางใหม่
+        x = (canvas.clientWidth - imageWidth * scale) / 2;
+        y = (canvas.clientHeight - imageHeight * scale) / 2;
+
+        render();
     }
 });
   } catch (error) {
