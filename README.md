@@ -1,27 +1,18 @@
-# TEX Marketing Hub V4
+# TEX Marketing Hub V5
 
-This version keeps the existing viewer and interaction functions, while rebuilding
-the page layout and typography to prevent text overlap across common screen sizes.
+GitHub Pages-ready static website.
 
-## What changed
-
-- Preserved fullscreen viewer, zoom, drag, pinch zoom, fit, 1:1 and download
-- Rebuilt desktop and mobile layout
-- Removed fragile fixed-height desktop composition
-- Added explicit line-heights and safer letter-spacing
-- Reduced heading compression and prevented text collision
-- Kept Volume 01 / Doomsday accents without making the whole website Marvel-themed
-
-## Upload to GitHub Pages
-
-Replace the old repository files with:
-
+## Upload
+Upload everything inside this folder to the repository root:
 - `index.html`
 - `css/`
 - `js/`
 - `images/`
 
-Then wait for GitHub Pages deployment and hard refresh:
-
-- Windows: `Ctrl + Shift + R`
-- macOS: `Cmd + Shift + R`
+## V5 changes
+- Desktop single-screen layout with no page scrolling on standard desktop displays
+- Removed About section and topic boxes
+- Kept Volume 02 and Volume 03 as Coming Soon, without months
+- Three-column grid prevents the newsletter cover from overlapping text
+- Existing fullscreen viewer, zoom, drag, pinch and download functions preserved
+- Mobile remains vertically scrollable
