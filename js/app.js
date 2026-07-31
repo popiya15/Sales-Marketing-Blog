@@ -111,7 +111,13 @@ async function openViewer(trigger) {
 
   try {
     await loadOriginalImage(source);
-    requestAnimationFrame(fitToScreen);
+    requestAnimationFrame(() => {
+    fitToScreen();
+
+    if (source.includes("newsletter")) {
+        zoomAt(0.40, canvas.clientWidth / 2, canvas.clientHeight / 2);
+    }
+});
   } catch (error) {
     loading.innerHTML = "Unable to load image";
     console.error(error);
