@@ -9,8 +9,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Ethiopic:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=3.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Ethiopic:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=4.0">
 </head>
 
 <body>
@@ -18,7 +18,7 @@
     <header class="header">
       <div class="shell header-inner">
         <a class="brand" href="#home" aria-label="TEX Marketing Hub home">
-          <span class="tex-logo">T<span>E</span>X</span>
+          <span class="tex-logo" aria-hidden="true">T<span>E</span>X</span>
           <span class="brand-copy">
             <strong>Marketing Hub</strong>
             <small>THAI ETHOXYLATE · INTERNAL NEWSLETTER</small>
@@ -33,51 +33,51 @@
 
         <a class="contact-btn" href="mailto:marketing@tex.co.th">
           <span aria-hidden="true">✉</span>
-          Contact Marketing
+          <b>Contact Marketing</b>
         </a>
       </div>
     </header>
 
-    <section class="hero shell">
+    <section class="hero shell" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <div class="kicker">
-          <span>TEX INTERNAL COMMUNICATION</span>
-          <i></i>
+        <div class="eyebrow">
+          <span>TEX Internal Communication</span>
+          <i aria-hidden="true"></i>
         </div>
 
-        <h1>Marketing<br>Hub</h1>
+        <h1 id="hero-title">Marketing Hub</h1>
 
-        <div class="edition">
-          <span>VOLUME 01</span>
-          <i></i>
+        <div class="edition-row">
+          <span>Volume 01</span>
+          <i aria-hidden="true"></i>
         </div>
-        <div class="edition-name">DOOMSDAY</div>
+        <div class="edition-name">Doomsday</div>
 
-        <p>
-          Monthly stories from the TEX Marketing Team.<br>
-          Market updates, customer highlights and everything that drives our business forward.
+        <p class="hero-description">
+          Monthly stories from the TEX Marketing Team—market updates,
+          customer highlights and the work moving our business forward.
         </p>
 
         <div class="topics" aria-label="Newsletter topics">
           <div class="topic">
             <span class="topic-icon" aria-hidden="true">↗</span>
-            <span>Market<br>Updates</span>
+            <span>Market Updates</span>
           </div>
           <div class="topic">
             <span class="topic-icon" aria-hidden="true">◎</span>
-            <span>Customer<br>Stories</span>
+            <span>Customer Stories</span>
           </div>
           <div class="topic">
             <span class="topic-icon" aria-hidden="true">▤</span>
-            <span>Team<br>News</span>
+            <span>Team News</span>
           </div>
         </div>
       </div>
 
       <div class="cover-area">
         <button class="cover js-open" type="button" aria-label="Open Marketing News Volume 01">
-          <span class="cover-halo"></span>
-          <span class="cover-edge"></span>
+          <span class="cover-halo" aria-hidden="true"></span>
+          <span class="cover-edge" aria-hidden="true"></span>
           <img
             src="images/newsletter-vol01-thumb.webp"
             width="520"
@@ -87,20 +87,22 @@
         </button>
 
         <button class="cover-caption js-open" type="button">
-          Click to open full screen
+          Open full screen
           <span aria-hidden="true">⌄</span>
         </button>
       </div>
 
       <article class="issue-panel">
-        <div class="panel-label"><i></i> Latest issue</div>
+        <div class="panel-label"><i aria-hidden="true"></i> Latest issue</div>
 
-        <div class="issue-number-row">
+        <div class="issue-heading">
           <span class="issue-number">01</span>
-          <span class="issue-word">Volume</span>
+          <div class="issue-volume">
+            <small>Volume</small>
+            <strong>July 2026</strong>
+          </div>
         </div>
 
-        <div class="issue-date">July 2026</div>
         <div class="panel-rule"></div>
 
         <h2>Marketing News</h2>
@@ -113,12 +115,12 @@
 
         <a class="secondary-btn" href="images/newsletter-vol01.png" download>
           <span aria-hidden="true">⇩</span>
-          Download Image
+          Download image
         </a>
 
         <div class="theme-meta">
           <div>
-            <small>Theme</small>
+            <small>Current theme</small>
             <strong>Doomsday</strong>
           </div>
           <span class="target" aria-hidden="true"></span>
@@ -126,16 +128,16 @@
       </article>
     </section>
 
-    <section class="archive shell" id="archive">
-      <div class="archive-label">
-        <span>Archive</span>
-        <i></i>
+    <section class="archive shell" id="archive" aria-labelledby="archive-title">
+      <div class="section-heading">
+        <span id="archive-title">Archive</span>
+        <i aria-hidden="true"></i>
       </div>
 
       <div class="archive-grid">
         <button class="archive-card current js-open" type="button">
           <img src="images/newsletter-vol01-thumb.webp" alt="" aria-hidden="true">
-          <div>
+          <div class="archive-copy">
             <small>Vol. 01</small>
             <strong>Doomsday</strong>
             <span>July 2026</span>
@@ -145,28 +147,29 @@
         </button>
 
         <article class="archive-card locked">
-          <div class="placeholder">♙</div>
-          <div>
+          <div class="placeholder" aria-hidden="true">02</div>
+          <div class="archive-copy">
             <small>Vol. 02</small>
-            <strong>Coming Soon</strong>
+            <strong>Coming soon</strong>
             <span>Next edition</span>
           </div>
         </article>
 
         <article class="archive-card locked">
-          <div class="placeholder">♙</div>
-          <div>
+          <div class="placeholder" aria-hidden="true">03</div>
+          <div class="archive-copy">
             <small>Vol. 03</small>
-            <strong>Coming Soon</strong>
+            <strong>Coming soon</strong>
             <span>Future edition</span>
           </div>
         </article>
 
         <article class="archive-card collection">
-          <div class="placeholder">▱</div>
-          <div>
-            <strong>View all issues</strong>
-            <span>Marketing News collection</span>
+          <div class="placeholder archive-symbol" aria-hidden="true">▱</div>
+          <div class="archive-copy">
+            <small>Collection</small>
+            <strong>All issues</strong>
+            <span>Marketing News archive</span>
           </div>
           <b aria-hidden="true">›</b>
         </article>
@@ -174,10 +177,13 @@
     </section>
 
     <section class="about shell" id="about">
-      <h2>About Marketing Hub</h2>
+      <div>
+        <span class="about-label">About</span>
+        <h2>A shared view of what Marketing sees and does.</h2>
+      </div>
       <p>
-        A central space for TEX teams to follow market movements, customer progress,
-        activities and stories from Marketing.
+        Marketing Hub brings together market movements, customer progress,
+        activities and stories from the TEX Marketing Team in one accessible space.
       </p>
     </section>
   </main>
@@ -217,6 +223,6 @@
     <div class="viewer-tip">Scroll or pinch to zoom · Drag to move · ESC to close</div>
   </div>
 
-  <script src="js/app.js?v=3.0"></script>
+  <script src="js/app.js?v=4.0"></script>
 </body>
 </html>

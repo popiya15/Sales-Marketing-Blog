@@ -1,29 +1,27 @@
-# TEX Marketing Hub V3
+# TEX Marketing Hub V4
 
-Updated editorial website matching Volume 01 while keeping the framework reusable
-for future newsletter themes.
+This version keeps the existing viewer and interaction functions, while rebuilding
+the page layout and typography to prevent text overlap across common screen sizes.
+
+## What changed
+
+- Preserved fullscreen viewer, zoom, drag, pinch zoom, fit, 1:1 and download
+- Rebuilt desktop and mobile layout
+- Removed fragile fixed-height desktop composition
+- Added explicit line-heights and safer letter-spacing
+- Reduced heading compression and prevented text collision
+- Kept Volume 01 / Doomsday accents without making the whole website Marvel-themed
 
 ## Upload to GitHub Pages
 
-Upload these items to the repository root and replace the old versions:
+Replace the old repository files with:
 
 - `index.html`
 - `css/`
 - `js/`
 - `images/`
 
-Then wait for GitHub Pages deployment and hard refresh the website with:
+Then wait for GitHub Pages deployment and hard refresh:
 
 - Windows: `Ctrl + Shift + R`
 - macOS: `Cmd + Shift + R`
-
-## Viewer controls
-
-- Click the cover or Open Volume 01
-- Mouse wheel / pinch: zoom
-- Drag: move image
-- Double-click: 1:1 / fit
-- `+` and `-`: zoom
-- `0`: fit screen
-- `1`: actual size
-- `Esc`: close
