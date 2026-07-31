@@ -112,21 +112,7 @@ async function openViewer(trigger) {
   try {
     await loadOriginalImage(source);
 
-requestAnimationFrame(() => {
-    fitToScreen();
-
-    if (source.includes("newsletter")) {
-
-        // เริ่มที่ 40%
-        scale = Math.max(minimumScale, 0.40);
-
-        // จัดให้อยู่กึ่งกลางใหม่
-        x = (canvas.clientWidth - imageWidth * scale) / 2;
-        y = (canvas.clientHeight - imageHeight * scale) / 2;
-
-        render();
-    }
-});
+requestAnimationFrame(fitToScreen);
   } catch (error) {
     loading.innerHTML = "Unable to load image";
     console.error(error);
