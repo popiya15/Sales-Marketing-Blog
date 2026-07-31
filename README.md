@@ -1,9 +1,12 @@
-# TEX Marketing Hub V6
+# TEX Marketing Hub V7
 
-GitHub Pages-ready version with a responsive magazine-spread hero.
+GitHub Pages-ready static website.
 
-- Desktop/tablet: Marketing message and Volume 01 appear as an open editorial spread.
-- Mobile: the Marketing message sits behind the newsletter and remains partially visible.
-- Existing fullscreen viewer, zoom, drag, pinch, download and archive behavior are preserved.
+## V7 updates
+- Keeps the overlapping/open-magazine design.
+- Marketing message and newsletter thumbnail are separately clickable.
+- Each page opens its own full-resolution image in the same fullscreen viewer.
+- Newsletter thumbnail shows the complete artwork without cropping the masthead.
+- Vol.02 and Vol.03 remain Coming Soon without dates.
 
-Upload every file and folder in this directory to the root of the GitHub repository.
+Upload the contents of this folder to the repository root, then hard-refresh the browser.

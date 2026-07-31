@@ -204,3 +204,161 @@
     width:min(39vw,500px,calc((100dvh - 194px)*1.16));
   }
 }
+
+/* ===== V7: Separate clickable pages + full thumbnail visibility ===== */
+.magazine-spread{
+  cursor:default;
+}
+
+.spread-page{
+  appearance:none;
+  -webkit-appearance:none;
+  margin:0;
+  padding:0;
+  border:0;
+  cursor:pointer;
+}
+
+/* Keep the complete artwork visible—especially the newsletter masthead. */
+.spread-page img{
+  object-fit:contain;
+  object-position:center top;
+  background:#090c0e;
+}
+
+/* The spread still reads as one open magazine, but each page is independent. */
+@media(min-width:681px){
+  .spread-page{
+    top:.5%;
+    width:50%;
+    height:99%;
+  }
+
+  .message-page{
+    left:.45%;
+    clip-path:none;
+  }
+
+  .newsletter-page{
+    right:.45%;
+    clip-path:none;
+  }
+
+  .spread-fold{
+    top:1.6%;
+    height:96.8%;
+  }
+}
+
+.page-open-hint{
+  position:absolute;
+  z-index:8;
+  left:50%;
+  bottom:12px;
+  transform:translate(-50%,8px);
+  padding:6px 9px;
+  border:1px solid rgba(var(--accent-rgb),.45);
+  border-radius:999px;
+  background:rgba(5,8,9,.82);
+  color:#d9e9bd;
+  font-size:7px;
+  line-height:1;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .22s ease,transform .22s ease;
+  backdrop-filter:blur(8px);
+}
+
+.message-page:hover,
+.message-page:focus-visible{
+  z-index:4;
+  transform:rotateY(7deg) rotateZ(-2.4deg) translateX(-1.2%) translateY(-5px);
+  filter:brightness(1.04);
+  box-shadow:0 34px 58px rgba(0,0,0,.68),0 0 0 1px rgba(var(--accent-rgb),.22);
+}
+
+.newsletter-page:hover,
+.newsletter-page:focus-visible{
+  z-index:4;
+  transform:rotateY(-5deg) rotateZ(1.2deg) translateX(1%) translateY(-8px);
+  filter:brightness(1.04);
+  box-shadow:0 34px 58px rgba(0,0,0,.68),0 0 0 1px rgba(var(--accent-rgb),.22);
+}
+
+.spread-page:hover .page-open-hint,
+.spread-page:focus-visible .page-open-hint{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+.spread-page:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:4px;
+}
+
+.cover-caption{
+  margin:13px 0 0;
+  cursor:default;
+}
+
+/* Disable the old parent-hover motion so only the chosen page responds. */
+.magazine-spread:hover .message-page,
+.magazine-spread:hover .newsletter-page{
+  filter:none;
+}
+.magazine-spread:hover .message-page{
+  transform:rotateY(10deg) rotateZ(-1.8deg) translateX(2.5%);
+}
+.magazine-spread:hover .newsletter-page{
+  transform:rotateY(-8deg) rotateZ(.8deg) translateX(-2%);
+  box-shadow:0 25px 50px rgba(0,0,0,.56);
+}
+/* Re-apply individual hover after the parent reset. */
+.magazine-spread .message-page:hover,
+.magazine-spread .message-page:focus-visible{
+  z-index:4;
+  transform:rotateY(7deg) rotateZ(-2.4deg) translateX(-1.2%) translateY(-5px);
+  filter:brightness(1.04);
+  box-shadow:0 34px 58px rgba(0,0,0,.68),0 0 0 1px rgba(var(--accent-rgb),.22);
+}
+.magazine-spread .newsletter-page:hover,
+.magazine-spread .newsletter-page:focus-visible{
+  z-index:4;
+  transform:rotateY(-5deg) rotateZ(1.2deg) translateX(1%) translateY(-8px);
+  filter:brightness(1.04);
+  box-shadow:0 34px 58px rgba(0,0,0,.68),0 0 0 1px rgba(var(--accent-rgb),.22);
+}
+
+@media(max-width:680px){
+  .spread-page img{
+    object-fit:contain;
+    object-position:center top;
+  }
+
+  /* Preserve the stacked look. The exposed left/back sheet remains clickable. */
+  .message-page{
+    pointer-events:auto;
+  }
+
+  .page-open-hint{
+    display:none;
+  }
+
+  .magazine-spread:hover .message-page,
+  .magazine-spread .message-page:hover,
+  .magazine-spread .message-page:focus-visible{
+    transform:rotate(-5.5deg) translate(-1%,2.5%);
+    filter:brightness(.86) saturate(.88);
+  }
+
+  .magazine-spread:hover .newsletter-page,
+  .magazine-spread .newsletter-page:hover,
+  .magazine-spread .newsletter-page:focus-visible{
+    transform:rotate(1.4deg) translate(5.5%,1.4%);
+    box-shadow:0 25px 50px rgba(0,0,0,.56);
+    filter:none;
+  }
+}

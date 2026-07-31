@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Ethiopic:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=6.0">
+  <link rel="stylesheet" href="css/style.css?v=7.0">
 </head>
 <body>
   <main class="site" id="home">
@@ -38,19 +38,32 @@
         </div>
 
         <div class="cover-area">
-          <button class="magazine-spread js-open" type="button" aria-label="Open Marketing News Volume 01">
+          <div class="magazine-spread" aria-label="Volume 01 page previews">
             <span class="spread-halo" aria-hidden="true"></span>
             <span class="spread-shadow" aria-hidden="true"></span>
-            <span class="spread-page message-page">
+
+            <button class="spread-page message-page js-open" type="button"
+              data-image="images/marketing-message.png"
+              data-title="สารจาก Marketing"
+              data-meta="Volume 01 · Marketing Team Message"
+              data-alt="สารจาก Marketing">
               <img src="images/marketing-message-thumb.webp" width="700" height="1050" alt="สารจาก Marketing">
-            </span>
-            <span class="spread-page newsletter-page">
+              <span class="page-open-hint" aria-hidden="true">Open page ↗</span>
+            </button>
+
+            <button class="spread-page newsletter-page js-open" type="button"
+              data-image="images/newsletter-vol01.png"
+              data-title="Marketing News"
+              data-meta="Volume 01 · July 2026"
+              data-alt="TEX Marketing News Volume 01">
               <span class="cover-edge" aria-hidden="true"></span>
               <img src="images/newsletter-vol01-thumb.webp" width="520" height="780" alt="TEX Marketing News Volume 01 cover">
-            </span>
+              <span class="page-open-hint" aria-hidden="true">Open newsletter ↗</span>
+            </button>
+
             <span class="spread-fold" aria-hidden="true"></span>
-          </button>
-          <button class="cover-caption js-open" type="button">Open full screen <span aria-hidden="true">↗</span></button>
+          </div>
+          <p class="cover-caption">Click either page to open full screen <span aria-hidden="true">↗</span></p>
         </div>
 
         <article class="issue-panel">
@@ -59,7 +72,11 @@
           <div class="panel-rule"></div>
           <h2>Marketing News</h2>
           <p>Market movement, customer progress and stories from the TEX Marketing Team.</p>
-          <button class="primary-btn js-open" type="button"><span aria-hidden="true">▣</span>Open Volume 01</button>
+          <button class="primary-btn js-open" type="button"
+            data-image="images/newsletter-vol01.png"
+            data-title="Marketing News"
+            data-meta="Volume 01 · July 2026"
+            data-alt="TEX Marketing News Volume 01"><span aria-hidden="true">▣</span>Open Volume 01</button>
           <a class="secondary-btn" href="images/newsletter-vol01.png" download><span aria-hidden="true">⇩</span>Download image</a>
           <div class="theme-meta"><div><small>Current theme</small><strong>Doomsday</strong></div><span class="target" aria-hidden="true"></span></div>
         </article>
@@ -68,7 +85,11 @@
       <section class="archive shell" id="archive" aria-labelledby="archive-title">
         <div class="section-heading"><span id="archive-title">Archive</span><i aria-hidden="true"></i></div>
         <div class="archive-grid">
-          <button class="archive-card current js-open" type="button">
+          <button class="archive-card current js-open" type="button"
+            data-image="images/newsletter-vol01.png"
+            data-title="Marketing News"
+            data-meta="Volume 01 · July 2026"
+            data-alt="TEX Marketing News Volume 01">
             <img src="images/newsletter-vol01-thumb.webp" alt="" aria-hidden="true">
             <div class="archive-copy"><small>Vol. 01</small><strong>Doomsday</strong><span>Available</span></div>
             <b aria-hidden="true">›</b>
@@ -82,7 +103,7 @@
 
   <div class="viewer" id="viewer" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Marketing News viewer">
     <div class="viewer-bar">
-      <div class="viewer-title"><strong>Marketing News</strong><span>Volume 01 · July 2026</span></div>
+      <div class="viewer-title"><strong id="viewerHeading">Marketing News</strong><span id="viewerMeta">Volume 01 · July 2026</span></div>
       <div class="viewer-tools">
         <button id="zoomOut" type="button" aria-label="Zoom out">−</button>
         <button id="zoomLabel" class="zoom-label" type="button" aria-label="Current zoom">100%</button>
@@ -92,9 +113,9 @@
         <button id="close" class="viewer-close" type="button" aria-label="Close">✕</button>
       </div>
     </div>
-    <div class="canvas" id="canvas"><div class="loading" id="loading"><span></span>Loading original image</div><img class="newsletter" id="newsletter" data-src="images/newsletter-vol01.png" alt="TEX Marketing News Volume 01" draggable="false"></div>
+    <div class="canvas" id="canvas"><div class="loading" id="loading"><span></span>Loading original image</div><img class="newsletter" id="newsletter" alt="" draggable="false"></div>
     <div class="viewer-tip">Scroll or pinch to zoom · Drag to move · ESC to close</div>
   </div>
-  <script src="js/app.js?v=6.0"></script>
+  <script src="js/app.js?v=7.0"></script>
 </body>
 </html>

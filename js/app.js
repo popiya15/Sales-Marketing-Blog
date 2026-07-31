@@ -3,8 +3,11 @@ const canvas = document.getElementById("canvas");
 const image = document.getElementById("newsletter");
 const loading = document.getElementById("loading");
 const zoomLabel = document.getElementById("zoomLabel");
+const viewerHeading = document.getElementById("viewerHeading");
+const viewerMeta = document.getElementById("viewerMeta");
 
 let imageReady = false;
+let activeImageSource = "";
 let imageWidth = 1365;
 let imageHeight = 2048;
 let scale = 1;
@@ -26,9 +29,20 @@ function render() {
   zoomLabel.textContent = `${Math.round(scale * 100)}%`;
 }
 
-function loadOriginalImage() {
+function prepareImage(source, altText) {
+  if (activeImageSource === source && imageReady) return;
+
+  activeImageSource = source;
+  imageReady = false;
+  loading.classList.remove("hidden");
+  loading.innerHTML = "<span></span>Loading original image";
+  image.removeAttribute("src");
+  image.alt = altText || "Newsletter image";
+}
+
+function loadOriginalImage(source) {
   return new Promise((resolve, reject) => {
-    if (imageReady) {
+    if (imageReady && image.src.endsWith(source)) {
       resolve();
       return;
     }
@@ -43,8 +57,8 @@ function loadOriginalImage() {
       resolve();
     };
 
-    image.onerror = () => reject(new Error("Unable to load newsletter image."));
-    image.src = image.dataset.src;
+    image.onerror = () => reject(new Error(`Unable to load image: ${source}`));
+    image.src = source;
   });
 }
 
@@ -80,13 +94,23 @@ function actualSize(centerX = canvas.clientWidth / 2, centerY = canvas.clientHei
   zoomAt(1, centerX, centerY);
 }
 
-async function openViewer() {
+async function openViewer(trigger) {
+  const source = trigger?.dataset.image || "images/newsletter-vol01.png";
+  const title = trigger?.dataset.title || "Marketing News";
+  const meta = trigger?.dataset.meta || "Volume 01 · July 2026";
+  const alt = trigger?.dataset.alt || title;
+
+  viewerHeading.textContent = title;
+  viewerMeta.textContent = meta;
+  viewer.setAttribute("aria-label", `${title} viewer`);
+  prepareImage(source, alt);
+
   viewer.classList.add("open");
   viewer.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
 
   try {
-    await loadOriginalImage();
+    await loadOriginalImage(source);
     requestAnimationFrame(fitToScreen);
   } catch (error) {
     loading.innerHTML = "Unable to load image";
@@ -101,9 +125,8 @@ function closeViewer() {
 }
 
 document.addEventListener("click", (event) => {
-  if (event.target.closest(".js-open")) {
-    openViewer();
-  }
+  const trigger = event.target.closest(".js-open");
+  if (trigger) openViewer(trigger);
 });
 
 document.getElementById("close").addEventListener("click", closeViewer);
@@ -123,7 +146,6 @@ zoomLabel.addEventListener("click", fitToScreen);
 canvas.addEventListener("wheel", (event) => {
   event.preventDefault();
   const bounds = canvas.getBoundingClientRect();
-
   zoomAt(
     scale * Math.exp(-event.deltaY * .00145),
     event.clientX - bounds.left,
@@ -133,20 +155,15 @@ canvas.addEventListener("wheel", (event) => {
 
 canvas.addEventListener("dblclick", (event) => {
   const bounds = canvas.getBoundingClientRect();
-
   if (Math.abs(scale - 1) < .04) {
     fitToScreen();
   } else {
-    actualSize(
-      event.clientX - bounds.left,
-      event.clientY - bounds.top
-    );
+    actualSize(event.clientX - bounds.left, event.clientY - bounds.top);
   }
 });
 
 canvas.addEventListener("pointerdown", (event) => {
   if (event.pointerType === "touch") return;
-
   dragging = true;
   lastX = event.clientX;
   lastY = event.clientY;
@@ -156,7 +173,6 @@ canvas.addEventListener("pointerdown", (event) => {
 
 canvas.addEventListener("pointermove", (event) => {
   if (!dragging) return;
-
   x += event.clientX - lastX;
   y += event.clientY - lastY;
   lastX = event.clientX;
@@ -178,7 +194,6 @@ canvas.addEventListener("touchstart", (event) => {
     lastX = event.touches[0].clientX;
     lastY = event.touches[0].clientY;
   }
-
   if (event.touches.length === 2) {
     dragging = false;
     pinchDistance = Math.hypot(
@@ -191,7 +206,6 @@ canvas.addEventListener("touchstart", (event) => {
 
 canvas.addEventListener("touchmove", (event) => {
   event.preventDefault();
-
   if (event.touches.length === 1 && dragging) {
     x += event.touches[0].clientX - lastX;
     y += event.touches[0].clientY - lastY;
@@ -199,19 +213,14 @@ canvas.addEventListener("touchmove", (event) => {
     lastY = event.touches[0].clientY;
     render();
   }
-
   if (event.touches.length === 2) {
     const distance = Math.hypot(
       event.touches[0].clientX - event.touches[1].clientX,
       event.touches[0].clientY - event.touches[1].clientY
     );
-
     const bounds = canvas.getBoundingClientRect();
-    const centerX =
-      (event.touches[0].clientX + event.touches[1].clientX) / 2 - bounds.left;
-    const centerY =
-      (event.touches[0].clientY + event.touches[1].clientY) / 2 - bounds.top;
-
+    const centerX = (event.touches[0].clientX + event.touches[1].clientX) / 2 - bounds.left;
+    const centerY = (event.touches[0].clientY + event.touches[1].clientY) / 2 - bounds.top;
     zoomAt(pinchScale * distance / pinchDistance, centerX, centerY);
   }
 }, { passive:false });
@@ -222,22 +231,15 @@ canvas.addEventListener("touchend", () => {
 
 window.addEventListener("keydown", (event) => {
   if (!viewer.classList.contains("open")) return;
-
   if (event.key === "Escape") closeViewer();
-  if (event.key === "+" || event.key === "=") {
-    document.getElementById("zoomIn").click();
-  }
-  if (event.key === "-") {
-    document.getElementById("zoomOut").click();
-  }
+  if (event.key === "+" || event.key === "=") document.getElementById("zoomIn").click();
+  if (event.key === "-") document.getElementById("zoomOut").click();
   if (event.key === "0") fitToScreen();
   if (event.key === "1") actualSize();
 });
 
 window.addEventListener("resize", () => {
-  if (viewer.classList.contains("open")) {
-    fitToScreen();
-  }
+  if (viewer.classList.contains("open")) fitToScreen();
 });
 
 document.querySelectorAll(".nav a").forEach((link) => {
