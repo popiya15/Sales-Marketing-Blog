@@ -111,8 +111,7 @@ async function openViewer(trigger) {
 
   try {
     await loadOriginalImage(source);
-
-requestAnimationFrame(fitToScreen);
+    requestAnimationFrame(fitToScreen);
   } catch (error) {
     loading.innerHTML = "Unable to load image";
     console.error(error);
