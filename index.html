@@ -3,106 +3,220 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#0b0d10">
+  <meta name="theme-color" content="#080b0d">
   <meta name="description" content="TEX Marketing Hub — Internal Newsletter">
   <title>TEX Marketing Hub</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Ethiopic:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Ethiopic:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=3.0">
 </head>
+
 <body>
-  <main class="app">
-    <header class="topbar">
-      <div class="container topbar-inner">
-        <div class="brand">
-          <div class="tex-mark">T<b>E</b>X</div>
-          <div class="brand-text">
+  <main class="site" id="home">
+    <header class="header">
+      <div class="shell header-inner">
+        <a class="brand" href="#home" aria-label="TEX Marketing Hub home">
+          <span class="tex-logo">T<span>E</span>X</span>
+          <span class="brand-copy">
             <strong>Marketing Hub</strong>
-            <span>Thai Ethoxylate · Internal Newsletter</span>
-          </div>
-        </div>
-        <div class="status"><i></i>Volume 01 available</div>
+            <small>THAI ETHOXYLATE · INTERNAL NEWSLETTER</small>
+          </span>
+        </a>
+
+        <nav class="nav" aria-label="Main navigation">
+          <a class="active" href="#home">Home</a>
+          <a href="#archive">Archive</a>
+          <a href="#about">About</a>
+        </nav>
+
+        <a class="contact-btn" href="mailto:marketing@tex.co.th">
+          <span aria-hidden="true">✉</span>
+          Contact Marketing
+        </a>
       </div>
     </header>
 
-    <section class="container hero">
-      <div class="intro">
-        <div class="eyebrow">TEX Internal Communication</div>
-        <h1>Marketing <span>Hub</span></h1>
-        <p>A shared space for market updates, customer stories, business progress and news from the TEX Marketing Team.</p>
-        <div class="chips">
-          <span>Market Updates</span>
-          <span>Customer Stories</span>
-          <span>Team News</span>
+    <section class="hero shell">
+      <div class="hero-copy">
+        <div class="kicker">
+          <span>TEX INTERNAL COMMUNICATION</span>
+          <i></i>
+        </div>
+
+        <h1>Marketing<br>Hub</h1>
+
+        <div class="edition">
+          <span>VOLUME 01</span>
+          <i></i>
+        </div>
+        <div class="edition-name">DOOMSDAY</div>
+
+        <p>
+          Monthly stories from the TEX Marketing Team.<br>
+          Market updates, customer highlights and everything that drives our business forward.
+        </p>
+
+        <div class="topics" aria-label="Newsletter topics">
+          <div class="topic">
+            <span class="topic-icon" aria-hidden="true">↗</span>
+            <span>Market<br>Updates</span>
+          </div>
+          <div class="topic">
+            <span class="topic-icon" aria-hidden="true">◎</span>
+            <span>Customer<br>Stories</span>
+          </div>
+          <div class="topic">
+            <span class="topic-icon" aria-hidden="true">▤</span>
+            <span>Team<br>News</span>
+          </div>
         </div>
       </div>
 
-      <div class="feature">
-        <button class="book js-open" type="button" aria-label="เปิด Marketing News Volume 01">
-          <span class="book-glow"></span>
-          <img src="images/newsletter-vol01-thumb.webp"
-               width="520" height="780"
-               alt="TEX Marketing Newsletter Volume 01">
-          <span class="open-note">Click to open full screen</span>
+      <div class="cover-area">
+        <button class="cover js-open" type="button" aria-label="Open Marketing News Volume 01">
+          <span class="cover-halo"></span>
+          <span class="cover-edge"></span>
+          <img
+            src="images/newsletter-vol01-thumb.webp"
+            width="520"
+            height="780"
+            alt="TEX Marketing News Volume 01 cover"
+          >
+        </button>
+
+        <button class="cover-caption js-open" type="button">
+          Click to open full screen
+          <span aria-hidden="true">⌄</span>
         </button>
       </div>
 
-      <article class="issue-card">
-        <small>Latest issue</small>
-        <div class="volume">01</div>
-        <div class="date">July 2026</div>
-        <div class="theme">Marketing News</div>
+      <article class="issue-panel">
+        <div class="panel-label"><i></i> Latest issue</div>
+
+        <div class="issue-number-row">
+          <span class="issue-number">01</span>
+          <span class="issue-word">Volume</span>
+        </div>
+
+        <div class="issue-date">July 2026</div>
+        <div class="panel-rule"></div>
+
+        <h2>Marketing News</h2>
         <p>Market movement, customer progress and stories from the TEX Marketing Team.</p>
-        <button class="open-btn js-open" type="button">Open Volume 01</button>
+
+        <button class="primary-btn js-open" type="button">
+          <span aria-hidden="true">▣</span>
+          Open Volume 01
+        </button>
+
+        <a class="secondary-btn" href="images/newsletter-vol01.png" download>
+          <span aria-hidden="true">⇩</span>
+          Download Image
+        </a>
+
+        <div class="theme-meta">
+          <div>
+            <small>Theme</small>
+            <strong>Doomsday</strong>
+          </div>
+          <span class="target" aria-hidden="true"></span>
+        </div>
       </article>
     </section>
 
-    <section class="container archive-section">
-      <div class="section-head">
-        <h2>Archive</h2>
-        <span>Marketing News Collection</span>
+    <section class="archive shell" id="archive">
+      <div class="archive-label">
+        <span>Archive</span>
+        <i></i>
       </div>
-      <div class="archive" id="archive"></div>
+
+      <div class="archive-grid">
+        <button class="archive-card current js-open" type="button">
+          <img src="images/newsletter-vol01-thumb.webp" alt="" aria-hidden="true">
+          <div>
+            <small>Vol. 01</small>
+            <strong>Doomsday</strong>
+            <span>July 2026</span>
+            <em>Available</em>
+          </div>
+          <b aria-hidden="true">›</b>
+        </button>
+
+        <article class="archive-card locked">
+          <div class="placeholder">♙</div>
+          <div>
+            <small>Vol. 02</small>
+            <strong>Coming Soon</strong>
+            <span>Next edition</span>
+          </div>
+        </article>
+
+        <article class="archive-card locked">
+          <div class="placeholder">♙</div>
+          <div>
+            <small>Vol. 03</small>
+            <strong>Coming Soon</strong>
+            <span>Future edition</span>
+          </div>
+        </article>
+
+        <article class="archive-card collection">
+          <div class="placeholder">▱</div>
+          <div>
+            <strong>View all issues</strong>
+            <span>Marketing News collection</span>
+          </div>
+          <b aria-hidden="true">›</b>
+        </article>
+      </div>
     </section>
 
-    <button class="fab" id="devToggle" type="button" aria-label="เปิดการตั้งค่า">⚙</button>
-    <aside class="dev" id="dev">
-      <h3>Display settings</h3>
-      <label for="accent">Accent color</label>
-      <input id="accent" type="color" value="#92d400">
-      <label for="density">Density</label>
-      <select id="density">
-        <option value="normal">Normal</option>
-        <option value="compact">Compact</option>
-      </select>
-    </aside>
+    <section class="about shell" id="about">
+      <h2>About Marketing Hub</h2>
+      <p>
+        A central space for TEX teams to follow market movements, customer progress,
+        activities and stories from Marketing.
+      </p>
+    </section>
   </main>
 
   <div class="viewer" id="viewer" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Marketing News viewer">
-    <div class="viewer-top">
-      <div class="viewer-title">Marketing News · Volume 01 · July 2026</div>
-      <div class="tools">
-        <button class="tool" id="zoomOut" type="button" aria-label="ซูมออก">−</button>
-        <button class="tool zoom-label" id="zoomLabel" type="button" aria-label="ระดับการซูม">100%</button>
-        <button class="tool" id="zoomIn" type="button" aria-label="ซูมเข้า">＋</button>
-        <button class="tool" id="actual" type="button" aria-label="ขนาดจริง">1:1</button>
-        <button class="tool" id="fit" type="button" aria-label="พอดีหน้าจอ">Fit</button>
-        <button class="tool close" id="close" type="button" aria-label="ปิด">✕</button>
+    <div class="viewer-bar">
+      <div class="viewer-title">
+        <strong>Marketing News</strong>
+        <span>Volume 01 · July 2026</span>
+      </div>
+
+      <div class="viewer-tools">
+        <button id="zoomOut" type="button" aria-label="Zoom out">−</button>
+        <button id="zoomLabel" class="zoom-label" type="button" aria-label="Current zoom">100%</button>
+        <button id="zoomIn" type="button" aria-label="Zoom in">＋</button>
+        <button id="actual" type="button" aria-label="Actual size">1:1</button>
+        <button id="fit" type="button" aria-label="Fit to screen">Fit</button>
+        <button id="close" class="viewer-close" type="button" aria-label="Close">✕</button>
       </div>
     </div>
 
     <div class="canvas" id="canvas">
-      <div class="loading" id="loading">Loading original image…</div>
-      <img class="newsletter"
-           id="newsletter"
-           data-src="images/newsletter-vol01.png"
-           alt="TEX Marketing Newsletter Volume 01"
-           draggable="false">
+      <div class="loading" id="loading">
+        <span></span>
+        Loading original image
+      </div>
+
+      <img
+        class="newsletter"
+        id="newsletter"
+        data-src="images/newsletter-vol01.png"
+        alt="TEX Marketing News Volume 01"
+        draggable="false"
+      >
     </div>
-    <div class="viewer-hint">Scroll or pinch to zoom · drag to move · double-click for 1:1 · ESC to close</div>
+
+    <div class="viewer-tip">Scroll or pinch to zoom · Drag to move · ESC to close</div>
   </div>
 
-  <script src="js/app.js"></script>
+  <script src="js/app.js?v=3.0"></script>
 </body>
 </html>

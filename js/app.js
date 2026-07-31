@@ -1,267 +1,248 @@
-\
-const volumes = [
-  { id: 1, date: "July 2026", status: "available" },
-  { id: 2, date: "", status: "soon" },
-  { id: 3, date: "", status: "soon" },
-  { id: 4, date: "", status: "soon" }
-];
+const viewer = document.getElementById("viewer");
+const canvas = document.getElementById("canvas");
+const image = document.getElementById("newsletter");
+const loading = document.getElementById("loading");
+const zoomLabel = document.getElementById("zoomLabel");
 
-const archive = document.getElementById("archive");
-archive.innerHTML = volumes.map((v) => {
-  if (v.status === "available") {
-    return `<button class="vol-card active js-open" type="button">
-      <strong>VOL.${String(v.id).padStart(2, "0")}</strong>
-      <span>${v.date} · Available</span>
-    </button>`;
+let imageReady = false;
+let imageWidth = 1365;
+let imageHeight = 2048;
+let scale = 1;
+let minimumScale = .1;
+const maximumScale = 6;
+let x = 0;
+let y = 0;
+let dragging = false;
+let lastX = 0;
+let lastY = 0;
+let pinchDistance = 0;
+let pinchScale = 1;
+
+const clamp = (value, minimum, maximum) =>
+  Math.max(minimum, Math.min(maximum, value));
+
+function render() {
+  image.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
+  zoomLabel.textContent = `${Math.round(scale * 100)}%`;
+}
+
+function loadOriginalImage() {
+  return new Promise((resolve, reject) => {
+    if (imageReady) {
+      resolve();
+      return;
+    }
+
+    image.onload = () => {
+      imageWidth = image.naturalWidth;
+      imageHeight = image.naturalHeight;
+      image.width = imageWidth;
+      image.height = imageHeight;
+      imageReady = true;
+      loading.classList.add("hidden");
+      resolve();
+    };
+
+    image.onerror = () => reject(new Error("Unable to load newsletter image."));
+    image.src = image.dataset.src;
+  });
+}
+
+function fitToScreen() {
+  if (!imageReady) return;
+
+  const padding = window.innerWidth <= 700 ? 18 : 34;
+  minimumScale = Math.min(
+    (canvas.clientWidth - padding * 2) / imageWidth,
+    (canvas.clientHeight - padding * 2) / imageHeight
+  );
+
+  scale = minimumScale;
+  x = (canvas.clientWidth - imageWidth * scale) / 2;
+  y = (canvas.clientHeight - imageHeight * scale) / 2;
+  render();
+}
+
+function zoomAt(nextScale, centerX, centerY) {
+  if (!imageReady) return;
+
+  const boundedScale = clamp(nextScale, minimumScale, maximumScale);
+  const imageX = (centerX - x) / scale;
+  const imageY = (centerY - y) / scale;
+
+  x = centerX - imageX * boundedScale;
+  y = centerY - imageY * boundedScale;
+  scale = boundedScale;
+  render();
+}
+
+function actualSize(centerX = canvas.clientWidth / 2, centerY = canvas.clientHeight / 2) {
+  zoomAt(1, centerX, centerY);
+}
+
+async function openViewer() {
+  viewer.classList.add("open");
+  viewer.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+
+  try {
+    await loadOriginalImage();
+    requestAnimationFrame(fitToScreen);
+  } catch (error) {
+    loading.innerHTML = "Unable to load image";
+    console.error(error);
   }
-  return `<div class="vol-card">
-    <strong>VOL.${String(v.id).padStart(2, "0")}</strong>
-    <span>Coming Soon</span>
-  </div>`;
-}).join("");
+}
 
-const root = document.documentElement;
-const dev = document.getElementById("dev");
-document.getElementById("devToggle").addEventListener("click", () => dev.classList.toggle("open"));
+function closeViewer() {
+  viewer.classList.remove("open");
+  viewer.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
 
-document.getElementById("accent").addEventListener("input", (event) => {
-  const hex = event.target.value;
-  const value = parseInt(hex.slice(1), 16);
-  const r = value >> 16;
-  const g = (value >> 8) & 255;
-  const b = value & 255;
-  root.style.setProperty("--accent", hex);
-  root.style.setProperty("--accent-rgb", `${r},${g},${b}`);
+document.addEventListener("click", (event) => {
+  if (event.target.closest(".js-open")) {
+    openViewer();
+  }
 });
 
-document.getElementById("density").addEventListener("change", (event) => {
-  document.body.classList.toggle("compact", event.target.value === "compact");
+document.getElementById("close").addEventListener("click", closeViewer);
+document.getElementById("fit").addEventListener("click", fitToScreen);
+document.getElementById("actual").addEventListener("click", () => actualSize());
+
+document.getElementById("zoomIn").addEventListener("click", () => {
+  zoomAt(scale * 1.25, canvas.clientWidth / 2, canvas.clientHeight / 2);
 });
 
-(() => {
-  const viewer = document.getElementById("viewer");
-  const canvas = document.getElementById("canvas");
-  const img = document.getElementById("newsletter");
-  const label = document.getElementById("zoomLabel");
-  const loading = document.getElementById("loading");
+document.getElementById("zoomOut").addEventListener("click", () => {
+  zoomAt(scale / 1.25, canvas.clientWidth / 2, canvas.clientHeight / 2);
+});
 
-  let imageWidth = 1365;
-  let imageHeight = 2048;
-  let scale = 1;
-  let x = 0;
-  let y = 0;
-  let minScale = 0.1;
-  const maxScale = 6;
-  let dragging = false;
-  let lastX = 0;
-  let lastY = 0;
-  let pinchStart = 0;
-  let pinchScale = 1;
-  let imageReady = false;
+zoomLabel.addEventListener("click", fitToScreen);
 
-  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+canvas.addEventListener("wheel", (event) => {
+  event.preventDefault();
+  const bounds = canvas.getBoundingClientRect();
 
-  function render() {
-    img.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
-    label.textContent = `${Math.round(scale * 100)}%`;
-  }
+  zoomAt(
+    scale * Math.exp(-event.deltaY * .00145),
+    event.clientX - bounds.left,
+    event.clientY - bounds.top
+  );
+}, { passive:false });
 
-  function fit() {
-    if (!imageReady) return;
-    const pad = window.innerWidth < 680 ? 18 : 30;
-    minScale = Math.min(
-      (canvas.clientWidth - pad * 2) / imageWidth,
-      (canvas.clientHeight - pad * 2) / imageHeight
+canvas.addEventListener("dblclick", (event) => {
+  const bounds = canvas.getBoundingClientRect();
+
+  if (Math.abs(scale - 1) < .04) {
+    fitToScreen();
+  } else {
+    actualSize(
+      event.clientX - bounds.left,
+      event.clientY - bounds.top
     );
-    scale = minScale;
-    x = (canvas.clientWidth - imageWidth * scale) / 2;
-    y = (canvas.clientHeight - imageHeight * scale) / 2;
-    render();
   }
+});
 
-  function actualSize(centerX = canvas.clientWidth / 2, centerY = canvas.clientHeight / 2) {
-    zoomAt(1, centerX, centerY);
-  }
+canvas.addEventListener("pointerdown", (event) => {
+  if (event.pointerType === "touch") return;
 
-  function zoomAt(nextScale, centerX, centerY) {
-    if (!imageReady) return;
-    const next = clamp(nextScale, minScale, maxScale);
-    const imageX = (centerX - x) / scale;
-    const imageY = (centerY - y) / scale;
-    x = centerX - imageX * next;
-    y = centerY - imageY * next;
-    scale = next;
-    render();
-  }
+  dragging = true;
+  lastX = event.clientX;
+  lastY = event.clientY;
+  canvas.classList.add("dragging");
+  canvas.setPointerCapture(event.pointerId);
+});
 
-  function loadOriginal() {
-    return new Promise((resolve, reject) => {
-      if (imageReady) return resolve();
-      img.onload = () => {
-        imageWidth = img.naturalWidth;
-        imageHeight = img.naturalHeight;
-        img.width = imageWidth;
-        img.height = imageHeight;
-        imageReady = true;
-        loading.classList.add("hidden");
-        resolve();
-      };
-      img.onerror = reject;
-      img.src = img.dataset.src;
-    });
-  }
+canvas.addEventListener("pointermove", (event) => {
+  if (!dragging) return;
 
-  async function openViewer() {
-    viewer.classList.add("open");
-    viewer.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
+  x += event.clientX - lastX;
+  y += event.clientY - lastY;
+  lastX = event.clientX;
+  lastY = event.clientY;
+  render();
+});
 
-    try {
-      await loadOriginal();
-      requestAnimationFrame(fit);
-    } catch (error) {
-      loading.textContent = "Unable to load image";
-      console.error(error);
-    }
+function endDrag() {
+  dragging = false;
+  canvas.classList.remove("dragging");
+}
 
-    try {
-      if (document.documentElement.requestFullscreen && !document.fullscreenElement) {
-        await document.documentElement.requestFullscreen();
-      }
-    } catch (_) {
-      // Fullscreen can be blocked by the browser; the overlay still works.
-    }
-  }
+canvas.addEventListener("pointerup", endDrag);
+canvas.addEventListener("pointercancel", endDrag);
 
-  function closeViewer() {
-    viewer.classList.remove("open");
-    viewer.setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "";
-    if (document.fullscreenElement) {
-      document.exitFullscreen().catch(() => {});
-    }
-  }
-
-  document.addEventListener("click", (event) => {
-    if (event.target.closest(".js-open")) openViewer();
-  });
-
-  document.getElementById("close").addEventListener("click", closeViewer);
-  document.getElementById("fit").addEventListener("click", fit);
-  document.getElementById("actual").addEventListener("click", () => actualSize());
-  label.addEventListener("click", fit);
-
-  document.getElementById("zoomIn").addEventListener("click", () => {
-    zoomAt(scale * 1.25, canvas.clientWidth / 2, canvas.clientHeight / 2);
-  });
-
-  document.getElementById("zoomOut").addEventListener("click", () => {
-    zoomAt(scale / 1.25, canvas.clientWidth / 2, canvas.clientHeight / 2);
-  });
-
-  canvas.addEventListener("wheel", (event) => {
-    event.preventDefault();
-    const rect = canvas.getBoundingClientRect();
-    zoomAt(
-      scale * Math.exp(-event.deltaY * 0.0015),
-      event.clientX - rect.left,
-      event.clientY - rect.top
-    );
-  }, { passive: false });
-
-  canvas.addEventListener("dblclick", (event) => {
-    const rect = canvas.getBoundingClientRect();
-    if (Math.abs(scale - 1) < 0.04) {
-      fit();
-    } else {
-      actualSize(event.clientX - rect.left, event.clientY - rect.top);
-    }
-  });
-
-  canvas.addEventListener("pointerdown", (event) => {
-    if (event.pointerType === "touch") return;
+canvas.addEventListener("touchstart", (event) => {
+  if (event.touches.length === 1) {
     dragging = true;
-    lastX = event.clientX;
-    lastY = event.clientY;
-    canvas.setPointerCapture(event.pointerId);
-    canvas.classList.add("dragging");
-  });
-
-  canvas.addEventListener("pointermove", (event) => {
-    if (!dragging) return;
-    x += event.clientX - lastX;
-    y += event.clientY - lastY;
-    lastX = event.clientX;
-    lastY = event.clientY;
-    render();
-  });
-
-  function stopDragging() {
-    dragging = false;
-    canvas.classList.remove("dragging");
+    lastX = event.touches[0].clientX;
+    lastY = event.touches[0].clientY;
   }
 
-  canvas.addEventListener("pointerup", stopDragging);
-  canvas.addEventListener("pointercancel", stopDragging);
+  if (event.touches.length === 2) {
+    dragging = false;
+    pinchDistance = Math.hypot(
+      event.touches[0].clientX - event.touches[1].clientX,
+      event.touches[0].clientY - event.touches[1].clientY
+    );
+    pinchScale = scale;
+  }
+}, { passive:false });
 
-  canvas.addEventListener("touchstart", (event) => {
-    if (event.touches.length === 1) {
-      dragging = true;
-      lastX = event.touches[0].clientX;
-      lastY = event.touches[0].clientY;
-    } else if (event.touches.length === 2) {
-      dragging = false;
-      pinchStart = Math.hypot(
-        event.touches[0].clientX - event.touches[1].clientX,
-        event.touches[0].clientY - event.touches[1].clientY
-      );
-      pinchScale = scale;
-    }
-  }, { passive: false });
+canvas.addEventListener("touchmove", (event) => {
+  event.preventDefault();
 
-  canvas.addEventListener("touchmove", (event) => {
-    event.preventDefault();
+  if (event.touches.length === 1 && dragging) {
+    x += event.touches[0].clientX - lastX;
+    y += event.touches[0].clientY - lastY;
+    lastX = event.touches[0].clientX;
+    lastY = event.touches[0].clientY;
+    render();
+  }
 
-    if (event.touches.length === 1 && dragging) {
-      x += event.touches[0].clientX - lastX;
-      y += event.touches[0].clientY - lastY;
-      lastX = event.touches[0].clientX;
-      lastY = event.touches[0].clientY;
-      render();
-    } else if (event.touches.length === 2) {
-      const distance = Math.hypot(
-        event.touches[0].clientX - event.touches[1].clientX,
-        event.touches[0].clientY - event.touches[1].clientY
-      );
-      const rect = canvas.getBoundingClientRect();
-      const centerX = (event.touches[0].clientX + event.touches[1].clientX) / 2 - rect.left;
-      const centerY = (event.touches[0].clientY + event.touches[1].clientY) / 2 - rect.top;
-      zoomAt(pinchScale * distance / pinchStart, centerX, centerY);
-    }
-  }, { passive: false });
+  if (event.touches.length === 2) {
+    const distance = Math.hypot(
+      event.touches[0].clientX - event.touches[1].clientX,
+      event.touches[0].clientY - event.touches[1].clientY
+    );
 
-  canvas.addEventListener("touchend", () => { dragging = false; });
+    const bounds = canvas.getBoundingClientRect();
+    const centerX =
+      (event.touches[0].clientX + event.touches[1].clientX) / 2 - bounds.left;
+    const centerY =
+      (event.touches[0].clientY + event.touches[1].clientY) / 2 - bounds.top;
 
-  window.addEventListener("keydown", (event) => {
-    if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "d") {
-      dev.classList.toggle("open");
-    }
-    if (!viewer.classList.contains("open")) return;
+    zoomAt(pinchScale * distance / pinchDistance, centerX, centerY);
+  }
+}, { passive:false });
 
-    if (event.key === "Escape") closeViewer();
-    if (event.key === "+" || event.key === "=") document.getElementById("zoomIn").click();
-    if (event.key === "-") document.getElementById("zoomOut").click();
-    if (event.key === "0") fit();
-    if (event.key === "1") actualSize();
+canvas.addEventListener("touchend", () => {
+  dragging = false;
+});
+
+window.addEventListener("keydown", (event) => {
+  if (!viewer.classList.contains("open")) return;
+
+  if (event.key === "Escape") closeViewer();
+  if (event.key === "+" || event.key === "=") {
+    document.getElementById("zoomIn").click();
+  }
+  if (event.key === "-") {
+    document.getElementById("zoomOut").click();
+  }
+  if (event.key === "0") fitToScreen();
+  if (event.key === "1") actualSize();
+});
+
+window.addEventListener("resize", () => {
+  if (viewer.classList.contains("open")) {
+    fitToScreen();
+  }
+});
+
+document.querySelectorAll(".nav a").forEach((link) => {
+  link.addEventListener("click", () => {
+    document.querySelectorAll(".nav a").forEach((item) => item.classList.remove("active"));
+    link.classList.add("active");
   });
-
-  window.addEventListener("resize", () => {
-    if (viewer.classList.contains("open")) fit();
-  });
-
-  document.addEventListener("fullscreenchange", () => {
-    if (!document.fullscreenElement && viewer.classList.contains("open")) {
-      requestAnimationFrame(fit);
-    }
-  });
-})();
+});

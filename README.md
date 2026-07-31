@@ -1,39 +1,29 @@
-# TEX Marketing Hub
+# TEX Marketing Hub V3
 
-GitHub Pages-ready static website.
+Updated editorial website matching Volume 01 while keeping the framework reusable
+for future newsletter themes.
 
-## Upload to GitHub
+## Upload to GitHub Pages
 
-Upload the contents of this folder to the repository root:
+Upload these items to the repository root and replace the old versions:
 
 - `index.html`
 - `css/`
 - `js/`
 - `images/`
 
-Do not upload the outer folder as an extra nested directory unless `index.html`
-will still be in the repository root.
+Then wait for GitHub Pages deployment and hard refresh the website with:
 
-## GitHub Pages
+- Windows: `Ctrl + Shift + R`
+- macOS: `Cmd + Shift + R`
 
-1. Open repository **Settings**
-2. Open **Pages**
-3. Select **Deploy from a branch**
-4. Select branch **main**
-5. Select folder **/(root)**
-6. Save
+## Viewer controls
 
-## Newsletter image
-
-- Homepage thumbnail: `images/newsletter-vol01-thumb.webp`
-- Full-screen original: `images/newsletter-vol01.png`
-
-The original PNG is copied without recompression. The viewer reads the PNG's
-real pixel dimensions and supports fit-to-screen, 1:1 viewing, zoom, drag,
-mouse wheel, double-click, and mobile pinch zoom.
-
-## Add a new volume
-
-1. Add its image to `images/`
-2. Add the volume in `js/app.js`
-3. Update the viewer source or extend the volume configuration
+- Click the cover or Open Volume 01
+- Mouse wheel / pinch: zoom
+- Drag: move image
+- Double-click: 1:1 / fit
+- `+` and `-`: zoom
+- `0`: fit screen
+- `1`: actual size
+- `Esc`: close
