@@ -248,17 +248,12 @@ document.querySelectorAll(".nav a").forEach((link) => {
     link.classList.add("active");
   });
 });
-// Auto open newsletter from URL
 window.addEventListener("load", () => {
   const params = new URLSearchParams(window.location.search);
 
   if (params.get("view") === "vol01") {
-    const trigger = document.querySelector(
-      '.js-open[data-image="images/newsletter-vol01.png"]'
-    );
-
-    if (trigger) {
-      openViewer(trigger);
-    }
+    setTimeout(() => {
+      document.querySelector(".newsletter-page").click();
+    }, 100);
   }
 });
