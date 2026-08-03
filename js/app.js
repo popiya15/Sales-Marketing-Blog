@@ -257,6 +257,3 @@ window.addEventListener("load", () => {
     }, 100);
   }
 });
-new ResizeObserver(() => {
-  if (viewer.classList.contains("open") && imageReady) fitToScreen();
-}).observe(canvas);
