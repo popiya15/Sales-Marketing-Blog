@@ -71,7 +71,7 @@ function fitToScreen() {
     (canvas.clientHeight - padding * 2) / imageHeight
   );
 
-  scale = minimumScale * 1.5;
+  scale = minimumScale * 1.08;
   x = (canvas.clientWidth - imageWidth * scale) / 2;
   y = (canvas.clientHeight - imageHeight * scale) / 2;
   render();
