@@ -110,8 +110,8 @@ async function openViewer(trigger) {
   document.body.style.overflow = "hidden";
 
   try {
-    await loadOriginalImage(source);
-    requestAnimationFrame(() => {
+  await loadOriginalImage(source);
+  requestAnimationFrame(() => {
     fitToScreen();
 
     // ถ้าอยากใหญ่ขึ้น
@@ -122,7 +122,7 @@ async function openViewer(trigger) {
 
     render();
 });
-  } catch (error) {
+} catch (error) {
     loading.innerHTML = "Unable to load image";
     console.error(error);
   }
