@@ -71,7 +71,7 @@ function fitToScreen() {
     (canvas.clientHeight - padding * 2) / imageHeight
   );
 
-  scale = minimumScale;
+  scale = minimumScale * 1.2;
   x = (canvas.clientWidth - imageWidth * scale) / 2;
   y = (canvas.clientHeight - imageHeight * scale) / 2;
   render();
@@ -111,20 +111,7 @@ async function openViewer(trigger) {
 
   try {
   await loadOriginalImage(source);
-
-  requestAnimationFrame(() => {
-    fitToScreen();
-
-    // ขยายจาก Fit อีก 20%
-    scale *= 1.2;
-
-    // จัดให้อยู่กึ่งกลางใหม่
-    x = (canvas.clientWidth - imageWidth * scale) / 2;
-    y = (canvas.clientHeight - imageHeight * scale) / 2;
-
-    render();
-  });
-
+  requestAnimationFrame(fitToScreen);
 } catch (error) {
   loading.innerHTML = "Unable to load image";
   console.error(error);
