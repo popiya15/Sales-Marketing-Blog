@@ -65,13 +65,13 @@ function loadOriginalImage(source) {
 function fitToScreen() {
   if (!imageReady) return;
 
-  const padding = window.innerWidth <= 700 ? 18 : 34;
+  const padding = window.innerWidth <= 700 ? 12 : 16;
   minimumScale = Math.min(
     (canvas.clientWidth - padding * 2) / imageWidth,
     (canvas.clientHeight - padding * 2) / imageHeight
   );
 
-  scale = minimumScale * 1.2;
+  scale = minimumScale * 1.5;
   x = (canvas.clientWidth - imageWidth * scale) / 2;
   y = (canvas.clientHeight - imageHeight * scale) / 2;
   render();
@@ -110,9 +110,9 @@ async function openViewer(trigger) {
   document.body.style.overflow = "hidden";
 
   try {
-    await loadOriginalImage(source);
-    requestAnimationFrame(() => requestAnimationFrame(fitToScreen));
-  } catch (error) {
+  await loadOriginalImage(source);
+  requestAnimationFrame(fitToScreen);
+} catch (error) {
   loading.innerHTML = "Unable to load image";
   console.error(error);
 }
