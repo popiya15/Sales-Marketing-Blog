@@ -111,7 +111,17 @@ async function openViewer(trigger) {
 
   try {
     await loadOriginalImage(source);
-    requestAnimationFrame(fitToScreen);
+    requestAnimationFrame(() => {
+    fitToScreen();
+
+    // ถ้าอยากใหญ่ขึ้น
+    scale *= 1.2;
+
+    x = (canvas.clientWidth - imageWidth * scale) / 2;
+    y = (canvas.clientHeight - imageHeight * scale) / 2;
+
+    render();
+});
   } catch (error) {
     loading.innerHTML = "Unable to load image";
     console.error(error);
