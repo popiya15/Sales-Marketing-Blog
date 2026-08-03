@@ -110,9 +110,9 @@ async function openViewer(trigger) {
   document.body.style.overflow = "hidden";
 
   try {
-  await loadOriginalImage(source);
-  requestAnimationFrame(fitToScreen);
-} catch (error) {
+    await loadOriginalImage(source);
+    requestAnimationFrame(() => requestAnimationFrame(fitToScreen));
+  } catch (error) {
   loading.innerHTML = "Unable to load image";
   console.error(error);
 }
@@ -257,3 +257,6 @@ window.addEventListener("load", () => {
     }, 100);
   }
 });
+new ResizeObserver(() => {
+  if (viewer.classList.contains("open") && imageReady) fitToScreen();
+}).observe(canvas);
