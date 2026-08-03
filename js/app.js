@@ -111,21 +111,24 @@ async function openViewer(trigger) {
 
   try {
   await loadOriginalImage(source);
+
   requestAnimationFrame(() => {
     fitToScreen();
 
-    // ถ้าอยากใหญ่ขึ้น
+    // ขยายจาก Fit อีก 20%
     scale *= 1.2;
 
+    // จัดให้อยู่กึ่งกลางใหม่
     x = (canvas.clientWidth - imageWidth * scale) / 2;
     y = (canvas.clientHeight - imageHeight * scale) / 2;
 
     render();
-});
+  });
+
 } catch (error) {
-    loading.innerHTML = "Unable to load image";
-    console.error(error);
-  }
+  loading.innerHTML = "Unable to load image";
+  console.error(error);
+}
 }
 
 function closeViewer() {
